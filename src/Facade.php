@@ -1,11 +1,11 @@
 <?php
 namespace Moxio\SQLiteExtendedAPI;
 
+use Moxio\SQLiteExtendedAPI\FFI\PDO\DriverDataResolver as PDODriverDataResolver;
 use Moxio\SQLiteExtendedAPI\FFI\SQLite3\ConnectionWrapper as SQLite3ConnectionWrapper;
-use ZEngine\Core;
-use ZEngine\Reflection\ReflectionValue;
 
 final class Facade {
+    private static PDODriverDataResolver $pdo_driver_data_resolver;
     private static SQLite3ConnectionWrapper $sqlite3_connection_wrapper;
 
     private function __construct() {
@@ -13,30 +13,13 @@ final class Facade {
     }
 
     public static function wrapPDO(\PDO $pdo): WrappedConnection {
-        if (isset(Core::$compiler) === false) {
-            Core::init();
+        if (isset(self::$pdo_driver_data_resolver) === false) {
+            self::$pdo_driver_data_resolver = new PDODriverDataResolver();
         }
+        $pdo_driver_data_void_pointer = self::$pdo_driver_data_resolver->getDriverDataPointer($pdo);
 
-        $pdo_refl_value = new ReflectionValue($pdo);
-        $pdo_obj_pointer = $pdo_refl_value->getRawObject();
-        $offset = $pdo_obj_pointer->handlers->offset;
-
+        // Following https://github.com/php/php-src/pull/3368/files#diff-eb26679695f7db289366ef6b03ee25daR729
         $pdo_sqlite_ffi = \FFI::cdef(<<<CDEF
-/* From https://github.com/php/php-src/blob/d1764ca33018f1f2e4a05926c879c67ad4aa8da5/ext/pdo/php_pdo_driver.h#L432 */
-struct _pdo_dbh_t {
-    /* replaced pdo_dbh_methods* by void* */
-    const void *methods;
-    void *driver_data;
-    /* omitted rest of struct */
-};
-
-/* From https://github.com/php/php-src/blob/d1764ca33018f1f2e4a05926c879c67ad4aa8da5/ext/pdo/php_pdo_driver.h#L510 */
-struct _pdo_dbh_object_t {
-    /* had to insert struct keyword here */
-    struct _pdo_dbh_t *inner;
-    /* omitted `zend_object std` */
-};
-
 /* Adapted from https://github.com/php/php-src/blob/cfc704ea83c56970a72756f7d4fe464885445b5e/ext/pdo_sqlite/php_pdo_sqlite_int.h#L55 */
 struct pdo_sqlite_db_handle {
     /* replaced sqlite3* by void* */
@@ -44,14 +27,7 @@ struct pdo_sqlite_db_handle {
     /* omitted rest of struct */
 };
 CDEF, "pdo_sqlite.so");
-
-        // Following https://github.com/php/php-src/blob/d1764ca33018f1f2e4a05926c879c67ad4aa8da5/ext/pdo/php_pdo_driver.h#L520
-        $pdo_dbh_object_pointer = $pdo_sqlite_ffi->cast("struct _pdo_dbh_object_t*", $pdo_sqlite_ffi->cast("char*", $pdo_obj_pointer) - $offset);
-        $pdo_dbh_pointer = $pdo_dbh_object_pointer[0]->inner;
-
-        // Following https://github.com/php/php-src/pull/3368/files#diff-eb26679695f7db289366ef6b03ee25daR729
-        $pdo_sqlite_db_handle_pointer = $pdo_sqlite_ffi->cast("struct pdo_sqlite_db_handle*", $pdo_dbh_pointer[0]->driver_data);
-
+        $pdo_sqlite_db_handle_pointer = $pdo_sqlite_ffi->cast("struct pdo_sqlite_db_handle*", $pdo_driver_data_void_pointer);
         $sqlite3_void_pointer = $pdo_sqlite_db_handle_pointer[0]->db;
 
         if (isset(self::$sqlite3_connection_wrapper) === false) {
