@@ -3,9 +3,9 @@ namespace Moxio\SQLiteExtendedAPI;
 
 final class WrappedConnection {
     private \FFI $sqlite3_ffi;
-    private \FFI\Cdata $sqlite3_pointer;
+    private \FFI\CData $sqlite3_pointer;
 
-    public function __construct(\FFI $sqlite3_ffi, \FFI\Cdata $sqlite3_pointer) {
+    public function __construct(\FFI $sqlite3_ffi, \FFI\CData $sqlite3_pointer) {
         $this->sqlite3_ffi = $sqlite3_ffi;
         $this->sqlite3_pointer = $sqlite3_pointer;
     }
