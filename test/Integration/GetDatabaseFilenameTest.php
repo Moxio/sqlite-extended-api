@@ -1,5 +1,5 @@
 <?php
-namespace Moxio\SQLiteExtendedAPI\Test\WrappedConnection;
+namespace Moxio\SQLiteExtendedAPI\Test\Integration;
 
 use Moxio\SQLiteExtendedAPI\Facade;
 use PHPUnit\Framework\TestCase;
