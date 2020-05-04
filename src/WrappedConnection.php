@@ -15,6 +15,7 @@ final class WrappedConnection {
     }
 
     public function loadExtension(string $shared_library): void {
+        $this->sqlite3_ffi->sqlite3_db_config($this->sqlite3_pointer, self::SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION, 1, null);
         $this->sqlite3_ffi->sqlite3_load_extension($this->sqlite3_pointer, $shared_library, null, null);
     }
 }

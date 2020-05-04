@@ -1,6 +1,9 @@
 /* From https://github.com/sqlite/sqlite/blob/278b0517d88d4150830a4ee2c628a55da40d186d/src/sqlite.h.in#L249 */
 typedef struct sqlite3 sqlite3;
 
+/* From https://github.com/sqlite/sqlite/blob/278b0517d88d4150830a4ee2c628a55da40d186d/src/sqlite.h.in#L1595 */
+int sqlite3_db_config(sqlite3*, int op, ...);
+
 /* From https://github.com/sqlite/sqlite/blob/278b0517d88d4150830a4ee2c628a55da40d186d/src/sqlite.h.in#L6173 */
 const char *sqlite3_db_filename(sqlite3 *db, const char *zDbName);
 
