@@ -13,4 +13,8 @@ final class WrappedConnection {
     public function getDatabaseFilename(): string {
         return $this->sqlite3_ffi->sqlite3_db_filename($this->sqlite3_pointer, "main");
     }
+
+    public function loadExtension(string $shared_library): void {
+        $this->sqlite3_ffi->sqlite3_load_extension($this->sqlite3_pointer, $shared_library, null, null);
+    }
 }
