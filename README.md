@@ -89,6 +89,13 @@ License
 -------
 This project is released under the MIT license.
 
+Treeware
+--------
+This package is [Treeware](https://treeware.earth/). If you use it in production,
+then we'd appreciate it if you [**buy the world a tree**](https://plant.treeware.earth/Moxio/sqlite-extended-api)
+to thank us for our work. By contributing to the Treeware forest you'll be creating
+employment for local families and restoring wildlife habitats.
+
 ---
 Made with love, coffee and fun by the [Moxio](https://www.moxio.com) team from
 Delft, The Netherlands. Interested in joining our awesome team? Check out our
