@@ -4,7 +4,7 @@
 moxio/sqlite-extended-api
 =========================
 
-Exposes SQLite API's that are otherwise not available in PHP. You can connect
+Exposes SQLite APIs that are otherwise not available in PHP. You can connect
 to an SQLite database as you normally would using PHP's `PDO` extension, then
 use this library to call SQLite API methods that `PDO` does not offer (e.g.
 loading extensions).
@@ -29,7 +29,7 @@ Usage
 -----
 If you have an existing `PDO` connection to an SQLite database, you can use the
 `wrapPDO()` static method on the `Facade` class to obtain access to extra SQLite
-API's:
+APIs:
 
 ```php
 <?php
@@ -41,13 +41,13 @@ $pdo = new \PDO('sqlite::memory:');
 // Wrap it using this library
 $wrapped_connection = Facade::wrapPDO($pdo);
 
-// Call extended API's on the wrapped connection object
+// Call extended APIs on the wrapped connection object
 $wrapped_connection->loadExtension('mod_spatialite.so');
 ```
 
 See the next section for methods available on the wrapped connection.
 
-Exposed API's
+Exposed APIs
 -------------
 Below is a short overview; see [`WrappedConnection`](src/WrappedConnection.php)
 for details.
@@ -85,7 +85,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 Contributing
 ------------
 Contributions to this project are more than welcome. If there are other SQLite
-API's that you would like to be able to use in PHP, feel free to send a PR or
+APIs that you would like to be able to use in PHP, feel free to send a PR or
 to file a feature request.
 
 License

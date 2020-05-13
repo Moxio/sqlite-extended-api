@@ -1,7 +1,7 @@
 {
 	"name": "moxio/sqlite-extended-api",
 	"type": "library",
-	"description": "Exposes SQLite API's that are otherwise not available in PHP",
+	"description": "Exposes SQLite APIs that are otherwise not available in PHP",
 	"license": "MIT",
 	"keywords" : [ "sqlite", "sqlite3", "pdo", "ffi", "z-engine" ],
 	"authors": [
