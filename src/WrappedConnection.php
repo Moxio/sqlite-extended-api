@@ -2,6 +2,9 @@
 namespace Moxio\SQLiteExtendedAPI;
 
 final class WrappedConnection {
+    /* From https://github.com/sqlite/sqlite/blob/278b0517d88d4150830a4ee2c628a55da40d186d/src/sqlite.h.in#L2330 */
+    private const SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION = 1005;
+
     private \FFI $sqlite3_ffi;
     private \FFI\CData $sqlite3_pointer;
 
