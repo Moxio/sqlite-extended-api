@@ -76,7 +76,7 @@ project by [Alexander Lisachenko](https://twitter.com/lisachenko) and PHP's
 to resolve your PHP variable to the raw connection pointer for the SQLite C API,
 then call that C API using FFI.
 
-A more detailed blog post is coming up...
+More details can be found in [this blog post](https://www.moxio.com/blog/47/how-to-load-an-sqlite-extension-in-pdo).
 
 Versioning
 ----------
