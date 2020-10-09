@@ -59,7 +59,8 @@ $wrapped_connection->loadExtension('mod_spatialite.so');
 ```
 This corresponds to the [`loadExtension`](https://www.php.net/manual/en/sqlite3.loadextension.php)
 method in PHP's SQLite3 extension, or [`sqlite3_load_extension](https://sqlite.org/c3ref/load_extension.html)
-in the SQLite C interface.
+in the SQLite C interface. Returns `true` if the extension was successfully loaded,
+false if it was not.
 
 ### Obtaining the database filename
 To obtain the full disk path of the database connected to, use `getDatabaseFilename()`:
