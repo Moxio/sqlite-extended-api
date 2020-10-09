@@ -24,7 +24,14 @@ class ExtensionLoadingTest extends TestCase {
             $this->markTestSkipped(sprintf("SQLite extension file '%s' needed for test not found", self::EXTENSION));
         }
 
-        $this->wrapped_connection->loadExtension(self::EXTENSION);
+        $this->assertTrue($this->wrapped_connection->loadExtension(self::EXTENSION));
         $this->assertNotFalse($this->pdo->query(self::EXTENSION_VERIFICATION_QUERY));
+    }
+
+    public function testLoadExtensionReturnsFalseIfExtensionCouldNotBeLoaded() {
+        $extension_dir = ini_get('sqlite3.extension_dir') ?: '/usr/lib/x86_64-linux-gnu';
+        $extension_file = $extension_dir . '/mod_does_not_exist.so';
+
+        $this->assertFalse($this->wrapped_connection->loadExtension($extension_file));
     }
 }
