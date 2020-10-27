@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff33ec49489ba9ca493a0bdb0d1010e0",
+    "content-hash": "e0ae17b3053a10bec8364a9f01f2698b",
     "packages": [
         {
             "name": "lisachenko/z-engine",
